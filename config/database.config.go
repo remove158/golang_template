@@ -5,6 +5,7 @@ import (
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"mylib/entity"
 	"os"
 )
 
@@ -24,7 +25,7 @@ func SetupDatebaseConfig() *gorm.DB {
 		panic("Can't create connection to db")
 	}
 	fmt.Println("Database connected")
-	// db.Automigrate()
+	db.AutoMigrate(&entity.User{})
 	return db
 }
 
