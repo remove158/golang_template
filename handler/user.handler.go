@@ -1,9 +1,11 @@
 package handler
 
 import (
-	"github.com/gin-gonic/gin"
 	"mylib/common/response"
+	"mylib/dto"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type UserHandler interface {
@@ -26,6 +28,13 @@ func (u *userHandler) GetUser(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, response)
 }
 func (u *userHandler) PostUser(ctx *gin.Context) {
-	response := response.BuildErrorResponse("Error", "Faile to create user", nil)
+	var user dto.PostUserDTO
+	err := ctx.ShouldBind(&user)
+	if err != nil {
+		response := response.BuildErrorResponse("Error to post user", err.Error(), nil)
+		ctx.JSON(http.StatusBadRequest, response)
+		return
+	}
+	response := response.BuildResponse(true, "Created user", user)
 	ctx.JSON(http.StatusCreated, response)
 }
