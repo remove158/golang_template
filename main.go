@@ -12,6 +12,7 @@ var (
 )
 
 func main() {
+	defer config.CloseDatabaseConnection(db)
 	r := gin.Default()
 
 	r.Run(":3000")

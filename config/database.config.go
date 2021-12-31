@@ -23,7 +23,16 @@ func SetupDatebaseConfig() *gorm.DB {
 	if err != nil {
 		panic("Can't create connection to db")
 	}
-	fmt.Print("Database connected")
+	fmt.Println("Database connected")
 	// db.Automigrate()
 	return db
+}
+
+func CloseDatabaseConnection(db *gorm.DB) {
+	dbSQL, err := db.DB()
+	if err != nil {
+		panic("Failed to close connection from database")
+	}
+	dbSQL.Close()
+	fmt.Println("Database disconnected")
 }
