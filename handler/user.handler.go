@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"mylib/common/response"
+	"net/http"
 )
 
 type UserHandler interface {
@@ -22,8 +22,10 @@ func NewUserHandler() UserHandler {
 }
 
 func (u *userHandler) GetUser(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, gin.H{"message": "Ok"})
+	response := response.BuildResponse(true, "OK!", nil)
+	ctx.JSON(http.StatusOK, response)
 }
 func (u *userHandler) PostUser(ctx *gin.Context) {
-	ctx.JSON(http.StatusCreated, gin.H{"message": "Created"})
+	response := response.BuildErrorResponse("Error", "Faile to create user", nil)
+	ctx.JSON(http.StatusCreated, response)
 }
