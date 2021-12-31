@@ -1,6 +1,15 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"mylib/config"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+)
+
+var (
+	db *gorm.DB = config.SetupDatebaseConfig()
+)
 
 func main() {
 	r := gin.Default()
